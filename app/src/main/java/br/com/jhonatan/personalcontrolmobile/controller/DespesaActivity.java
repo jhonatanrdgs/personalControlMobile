@@ -2,30 +2,26 @@ package br.com.jhonatan.personalcontrolmobile.controller;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import java.util.List;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
-import java.net.URL;
 
 import br.com.jhonatan.personalcontrolmobile.R;
+import br.com.jhonatan.personalcontrolmobile.dto.CadastrosGeraisDTO;
+import br.com.jhonatan.personalcontrolmobile.dto.Categoria;
+import br.com.jhonatan.personalcontrolmobile.service.CadastrosGeraisService;
 
 /**
  * Created by Jhonatan on 15/12/2015.
  */
 public class DespesaActivity extends Activity {
+
+    private CadastrosGeraisService service = new CadastrosGeraisService();//TODO injeção de dependencias
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +31,16 @@ public class DespesaActivity extends Activity {
 
     public void novo(View v) {
         setContentView(R.layout.content_despesa);
-        Spinner dropdown = (Spinner)findViewById(R.id.categoria);
-        String[] items = new String[]{"1", "2", "three"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        dropdown.setAdapter(adapter);
-        new RetrieveFeedTask().execute("http://www.cheesejedi.com/rest_services/get_big_cheese?level=1");
+
+        new CarregarComboCategoria((Spinner)findViewById(R.id.categoria)).execute("http://personalcontrol-rdgs.rhcloud.com/cadastrosGeraisApi/getCategorias");
+        //new CarregarComboMetodoPagamento((Spinner)findViewById(R.id.metodoPg)).execute("http://personalcontrol-rdgs.rhcloud.com/cadastrosGeraisApi/getCategorias");
 
     }
 
-    public void preencherCombo() {
-        Spinner metodoPg = (Spinner)findViewById(R.id.metodoPg);
-        String[] items2 = new String[]{"1", "2", "three"};
+    public void preencherCombo(Spinner combo, List<Categoria> itens) {
+        String[] items2 = new String[]{"1", "2", "three"};//TODO
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items2);
-        metodoPg.setAdapter(adapter2);
+        combo.setAdapter(adapter2);
     }
 
 
@@ -64,89 +57,40 @@ public class DespesaActivity extends Activity {
         System.out.println(data.getText().toString());
     }
 
-    class RetrieveFeedTask extends AsyncTask<String, Void, JSONArray> {
+    class CarregarComboCategoria extends AsyncTask<String, Void, List<Categoria>> {
 
-        private Exception exception;
+        private Spinner combo;
 
-        protected JSONArray doInBackground(String... serviceUrl) {
-            disableConnectionReuseIfNecessary();
-
-            HttpURLConnection urlConnection = null;
-            try {
-                // create connection
-                URL urlToRequest = new URL(serviceUrl[0]);
-                urlConnection = (HttpURLConnection)
-                        urlToRequest.openConnection();
-                urlConnection.setConnectTimeout(15000);
-                urlConnection.setReadTimeout(15000);
-
-                // handle issues
-                int statusCode = urlConnection.getResponseCode();
-                if (statusCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
-                    // handle unauthorized (if service requires user login)
-                } else if (statusCode != HttpURLConnection.HTTP_OK) {
-                    // handle any other errors, like 404, 500,..
-                }
-
-                // create JSON object from content
-                BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                return new JSONArray(getResponseText(in));
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                // URL is invalid
-            } catch (SocketTimeoutException e) {
-                e.printStackTrace();
-                // data retrieval or connection timed out
-            } catch (IOException e) {
-                e.printStackTrace();
-                // could not read response body
-                // (could not create input stream)
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-            }
-
-            return null;
+        public CarregarComboCategoria(Spinner combo) {
+            this.combo = combo;
         }
 
-        /**
-         * required in order to prevent issues in earlier Android version.
-         */
-        private void disableConnectionReuseIfNecessary() {
-            // see HttpURLConnection API doc
-            if (Integer.parseInt(Build.VERSION.SDK)
-                    < Build.VERSION_CODES.FROYO) {
-                System.setProperty("http.keepAlive", "false");
-            }
+        protected List<Categoria> doInBackground(String... serviceUrl) {
+            return service.listarCategorias(serviceUrl[0]);
         }
 
-        private String getResponseText(BufferedReader inStream) {
-            try {
-                String feed_str = null;
-                String entireFeed = "";
-                while ((feed_str = inStream.readLine()) != null) {
-                    entireFeed += feed_str;
-                }
-                return entireFeed;
+        protected void onPostExecute(List<Categoria> lista) {
+            preencherCombo(combo, lista);
+        }
+    }
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
+    class CarregarComboMetodoPagamento extends AsyncTask<String, Void, List<Categoria>> {
+
+        private Spinner combo;
+
+        public CarregarComboMetodoPagamento(Spinner combo) {
+            this.combo = combo;
         }
 
-        protected void onPostExecute(JSONArray feed) {
-            //http://stackoverflow.com/questions/9909765/how-to-pass-the-result-of-asynctask-onpostexecute-method-into-the-parent-activit
-            preencherCombo();
-            System.out.println(feed);
+        protected List<Categoria> doInBackground(String... serviceUrl) {
+            return null;//TODO
+        }
+
+        protected void onPostExecute(List<Categoria> lista) {
+            //preencherCombo(combo, lista);
         }
 
 
     }
-
 
 }
