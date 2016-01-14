@@ -26,4 +26,9 @@ public class Categoria implements CadastrosGeraisDTO {
         //TODO
     }
 
+    @Override
+    public String toString() {
+        return descricao;
+    }
+
 }

@@ -25,4 +25,9 @@ public class MetodoPagamento implements CadastrosGeraisDTO {
     public void preencherCombo(Spinner spinner) {
         //TODO
     }
+
+    @Override
+    public String toString() {
+        return descricao;
+    }
 }

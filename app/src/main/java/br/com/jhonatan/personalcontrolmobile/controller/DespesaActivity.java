@@ -12,8 +12,8 @@ import java.util.List;
 
 
 import br.com.jhonatan.personalcontrolmobile.R;
-import br.com.jhonatan.personalcontrolmobile.dto.CadastrosGeraisDTO;
 import br.com.jhonatan.personalcontrolmobile.dto.Categoria;
+import br.com.jhonatan.personalcontrolmobile.dto.MetodoPagamento;
 import br.com.jhonatan.personalcontrolmobile.service.CadastrosGeraisService;
 
 /**
@@ -33,13 +33,17 @@ public class DespesaActivity extends Activity {
         setContentView(R.layout.content_despesa);
 
         new CarregarComboCategoria((Spinner)findViewById(R.id.categoria)).execute("http://personalcontrol-rdgs.rhcloud.com/cadastrosGeraisApi/getCategorias");
-        //new CarregarComboMetodoPagamento((Spinner)findViewById(R.id.metodoPg)).execute("http://personalcontrol-rdgs.rhcloud.com/cadastrosGeraisApi/getCategorias");
+        new CarregarComboMetodoPagamento((Spinner)findViewById(R.id.metodoPg)).execute("http://personalcontrol-rdgs.rhcloud.com/cadastrosGeraisApi/getCategorias");
 
     }
 
     public void preencherCombo(Spinner combo, List<Categoria> itens) {
-        String[] items2 = new String[]{"1", "2", "three"};//TODO
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items2);
+        ArrayAdapter<Categoria> adapter2 = new ArrayAdapter<Categoria>(this, android.R.layout.simple_spinner_dropdown_item, itens);
+        combo.setAdapter(adapter2);
+    }
+
+    public void preencherCombo2(Spinner combo, List<MetodoPagamento> itens) {//TODO
+        ArrayAdapter<MetodoPagamento> adapter2 = new ArrayAdapter<MetodoPagamento>(this, android.R.layout.simple_spinner_dropdown_item, itens);
         combo.setAdapter(adapter2);
     }
 
@@ -74,7 +78,7 @@ public class DespesaActivity extends Activity {
         }
     }
 
-    class CarregarComboMetodoPagamento extends AsyncTask<String, Void, List<Categoria>> {
+    class CarregarComboMetodoPagamento extends AsyncTask<String, Void, List<MetodoPagamento>> {
 
         private Spinner combo;
 
@@ -82,15 +86,13 @@ public class DespesaActivity extends Activity {
             this.combo = combo;
         }
 
-        protected List<Categoria> doInBackground(String... serviceUrl) {
-            return null;//TODO
+        protected List<MetodoPagamento> doInBackground(String... serviceUrl) {
+            return service.listarMetodosPagamento(serviceUrl[0]);
         }
 
-        protected void onPostExecute(List<Categoria> lista) {
-            //preencherCombo(combo, lista);
+        protected void onPostExecute(List<MetodoPagamento> lista) {
+            preencherCombo2(combo, lista);
         }
-
 
     }
-
 }

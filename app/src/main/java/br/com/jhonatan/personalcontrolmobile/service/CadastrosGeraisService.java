@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.jhonatan.personalcontrolmobile.dto.Categoria;
+import br.com.jhonatan.personalcontrolmobile.dto.MetodoPagamento;
 
 /**
  * Created by jhonatan.rodrigues on 13/01/2016.
@@ -65,6 +66,10 @@ public class CadastrosGeraisService {
             }
         }
         return null;
+    }
+
+    public List<MetodoPagamento> listarMetodosPagamento(String serviceUrl) {
+
     }
 
     /**
