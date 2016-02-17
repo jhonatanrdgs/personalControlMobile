@@ -174,7 +174,7 @@ public class CadastrosGeraisService {
     public Despesa salvarDespesa(Despesa despesa, String urlService) {
         ObjectMapper mapper = new ObjectMapper();
 
-        String encoding = Base64.encodeToString(("admin" + ":" + "rest").getBytes(), Base64.NO_WRAP);
+        String encoding = Base64.encodeToString(("admin" + ":" + "rest").getBytes(), Base64.NO_WRAP);//TODO colocar senha correta
 
         try {
             String jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(despesa);
