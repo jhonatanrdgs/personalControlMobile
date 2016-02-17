@@ -1,17 +1,25 @@
 package br.com.jhonatan.personalcontrolmobile.controller;
 
 import android.app.Activity;
+import android.app.ListActivity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import br.com.jhonatan.personalcontrolmobile.R;
@@ -31,8 +39,29 @@ public class DespesaActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.content_list_despesa);
+
+        final ListView listview = (ListView) findViewById(R.id.listaDespesas);
+        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
+                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
+                "Android", "iPhone", "WindowsMobile" };
+
+        final StableArrayAdapter adapter = new StableArrayAdapter(this, android.R.layout.simple_list_item_1, Arrays.asList(values));
+        listview.setAdapter(adapter);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+                final String item = (String) parent.getItemAtPosition(position);
+                Toast.makeText(view.getContext(), item + " selected", Toast.LENGTH_LONG).show();
+            }
+
+        });
     }
+
 
     public void novo(View v) {
         setContentView(R.layout.content_despesa);
@@ -72,7 +101,7 @@ public class DespesaActivity extends Activity {
             d.setMetodoPagamento((MetodoPagamento) metodoPg.getSelectedItem());
             d.setTotalParcelas(Integer.valueOf(parcelas.getText().toString()));
             d.setValorTotal(new Double(valor.getText().toString()));
-            new SalvarDespesa().execute("http://localhost:8080/despesaApi/salvarDespesa");
+            new SalvarDespesa().execute("http://192.168.100.5:8080/personalcontrol/despesaApi/salvarDespesa");
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -122,7 +151,32 @@ public class DespesaActivity extends Activity {
         }
 
         protected void onPostExecute(Despesa lista) {
-           //TODO
+            //TODO
+        }
+
+    }
+
+    class StableArrayAdapter extends ArrayAdapter<String> {
+
+        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+
+        public StableArrayAdapter(Context context, int textViewResourceId,
+                                  List<String> objects) {
+            super(context, textViewResourceId, objects);
+            for (int i = 0; i < objects.size(); ++i) {
+                mIdMap.put(objects.get(i), i);
+            }
+        }
+
+        @Override
+        public long getItemId(int position) {
+            String item = getItem(position);
+            return mIdMap.get(item);
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
         }
 
     }

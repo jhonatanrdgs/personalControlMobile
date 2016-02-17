@@ -13,11 +13,22 @@
     android:orientation="vertical"
     tools:showIn="@layout/activity_main">
 
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Descrição:" android:id="@+id/descricaoLabel"
+         android:layout_marginTop="51dp" />
+
 
     <EditText android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/descricao"
-        android:hint="aaaaaa"/>
+        android:id="@+id/descricao"/>
+
+
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Categoria:" android:id="@+id/categoriaLabel" />
 
     <Spinner
         android:id="@+id/categoria"
@@ -25,25 +36,48 @@
         android:layout_height="wrap_content"
         android:spinnerMode="dropdown"/>
 
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Método Pagamento:" android:id="@+id/metodoPgLabel" />
+
     <Spinner
         android:id="@+id/metodoPg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:spinnerMode="dropdown"/>
 
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Fixa?" android:id="@+id/fixaLabel"/>
+
     <CheckBox android:id="@+id/fixa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Valor:" android:id="@+id/valorLabel" />
 
     <EditText android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/valor"
-        />
+        android:id="@+id/valor" />
+
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Data:" android:id="@+id/dataLabel" />
 
     <EditText android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/data" />
+        android:id="@+id/data"  android:hint="dd/MM/yyyy" />
+
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Parcelas:" android:id="@+id/parcelasLabel" />
 
     <EditText android:layout_width="match_parent"
         android:layout_height="wrap_content"

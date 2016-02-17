@@ -7,21 +7,13 @@ import android.util.Log;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
@@ -180,40 +172,59 @@ public class CadastrosGeraisService {
     }
 
     public Despesa salvarDespesa(Despesa despesa, String urlService) {
-        //TODO usando url http://stackoverflow.com/questions/13911993/sending-a-json-http-post-request-from-android
+        ObjectMapper mapper = new ObjectMapper();
 
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost(urlService);
+        String encoding = Base64.encodeToString(("admin" + ":" + "rest").getBytes(), Base64.NO_WRAP);
 
         try {
-            httppost.setHeader( "Content-Type", "application/json");
-            String authorizationString = "Basic " + Base64.encodeToString(
-                    ("admin" + ":" + "rest").getBytes(),
-                    Base64.NO_WRAP);
-            httppost.setHeader("Authorization", authorizationString);
-
-
-            ObjectMapper mapper = new ObjectMapper();
             String jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(despesa);
+            URL u = new URL(urlService);
+            HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+            conn.setDoOutput(true);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "Basic " + encoding);
+            conn.setRequestProperty("Content-type", "application/json");
 
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("req", jsonInString));
+            OutputStream os = conn.getOutputStream();
+            os.write(jsonInString.getBytes("UTF-8"));
+            os.close();
 
-            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-            // Execute HTTP Post Request
-            HttpResponse response = httpclient.execute(httppost);
-            System.out.println(response.getStatusLine().getStatusCode());
-//            InputStream inputStream = response.getEntity().getContent();
-//            InputStreamToStringExample str = new InputStreamToStringExample();
-//            responseServer = str.getStringFromInputStream(inputStream);
-//            Log.e("response", "response -----" + responseServer);
-
+            int responseCode = conn.getResponseCode();
+            System.out.println(responseCode);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         return despesa;
         //TODO colocar no service certo
+    }
+
+    private static String getStringFromInputStream(InputStream is) {
+
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        try {
+
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return sb.toString();
+
     }
 }
