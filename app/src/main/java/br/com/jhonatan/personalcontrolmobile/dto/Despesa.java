@@ -25,6 +25,16 @@ public class Despesa {
         descricao = "";//null dá erro na consulta
     }
 
+    public Despesa(String descricao, Double valorTotal, Categoria categoria, MetodoPagamento metodoPagamento, Date data, boolean fixa, Integer totalParcelas) {
+        this.descricao = descricao;
+        this.valorTotal = valorTotal;
+        this.categoria = categoria;
+        this.metodoPagamento = metodoPagamento;
+        this.data = data;
+        this.fixa = fixa;
+        this.totalParcelas = totalParcelas;
+    }
+
 
     public Long getId() {
         return id;
@@ -106,27 +116,4 @@ public class Despesa {
         this.fim = fim;
     }
 
-    public Date getInicioFormatado() {
-        if (inicio == null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            try {
-                inicio = sdf.parse("01/01/1970");
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        return inicio;
-    }
-
-    public Date getFimFormatado() {
-        if (fim == null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            try {
-                fim = sdf.parse("01/01/3000");
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        return fim;
-    }
 }

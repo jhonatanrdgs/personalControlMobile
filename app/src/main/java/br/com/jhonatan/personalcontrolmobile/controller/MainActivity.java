@@ -1,4 +1,4 @@
-package br.com.jhonatan.personalcontrolmobile;
+package br.com.jhonatan.personalcontrolmobile.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import br.com.jhonatan.personalcontrolmobile.R;
 import br.com.jhonatan.personalcontrolmobile.controller.DespesaActivity;
 
 
