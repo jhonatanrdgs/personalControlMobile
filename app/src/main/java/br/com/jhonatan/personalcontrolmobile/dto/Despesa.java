@@ -1,5 +1,7 @@
 package br.com.jhonatan.personalcontrolmobile.dto;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -16,6 +18,12 @@ public class Despesa {
     private Integer totalParcelas;
     private Date data;
     private boolean fixa;
+    private Date inicio;
+    private Date fim;
+
+    public Despesa() {
+        descricao = "";//null dá erro na consulta
+    }
 
 
     public Long getId() {
@@ -80,5 +88,45 @@ public class Despesa {
 
     public void setFixa(boolean fixa) {
         this.fixa = fixa;
+    }
+
+    public Date getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(Date inicio) {
+        this.inicio = inicio;
+    }
+
+    public Date getFim() {
+        return fim;
+    }
+
+    public void setFim(Date fim) {
+        this.fim = fim;
+    }
+
+    public Date getInicioFormatado() {
+        if (inicio == null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                inicio = sdf.parse("01/01/1970");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return inicio;
+    }
+
+    public Date getFimFormatado() {
+        if (fim == null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fim = sdf.parse("01/01/3000");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return fim;
     }
 }

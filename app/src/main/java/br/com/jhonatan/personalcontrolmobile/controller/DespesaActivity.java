@@ -39,27 +39,8 @@ public class DespesaActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.content_list_despesa);
-
-        final ListView listview = (ListView) findViewById(R.id.listaDespesas);
-        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-                "Android", "iPhone", "WindowsMobile" };
-
-        final StableArrayAdapter adapter = new StableArrayAdapter(this, android.R.layout.simple_list_item_1, Arrays.asList(values));
-        listview.setAdapter(adapter);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-                Toast.makeText(view.getContext(), item + " selected", Toast.LENGTH_LONG).show();
-            }
-
-        });
+        new ListarDespesas((ListView) findViewById(R.id.listaDespesas)).execute("http://personalcontrol-rdgs.rhcloud.com/despesaApi/listarDespesas");
     }
 
 
@@ -78,6 +59,26 @@ public class DespesaActivity extends Activity {
     public void preencherCombo2(Spinner combo, List<MetodoPagamento> itens) {//TODO
         ArrayAdapter<MetodoPagamento> adapter2 = new ArrayAdapter<MetodoPagamento>(this, android.R.layout.simple_spinner_dropdown_item, itens);
         combo.setAdapter(adapter2);
+    }
+
+    public void preencherLista(ListView listview, List<Despesa> itens) {//TODO
+//        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+//                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+//                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
+//                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
+//                "Android", "iPhone", "WindowsMobile" };
+
+        final StableArrayAdapter adapter = new StableArrayAdapter(this, android.R.layout.simple_list_item_1, itens);
+        listview.setAdapter(adapter);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+                final String item = (String) parent.getItemAtPosition(position);
+                Toast.makeText(view.getContext(), item + " selected", Toast.LENGTH_LONG).show();
+            }
+
+        });
     }
 
 
@@ -140,7 +141,23 @@ public class DespesaActivity extends Activity {
         protected void onPostExecute(List<MetodoPagamento> lista) {
             preencherCombo2(combo, lista);
         }
+    }
 
+    class ListarDespesas extends AsyncTask<String, Void, List<Despesa>> {
+
+        private ListView listView;
+
+        public ListarDespesas(ListView listView) {
+            this.listView = listView;
+        }
+
+        protected List<Despesa> doInBackground(String... serviceUrl) {
+            return service.listarDespesas(serviceUrl[0]);
+        }
+
+        protected void onPostExecute(List<Despesa> lista) {
+            preencherLista(listView, lista);
+        }
     }
 
     class SalvarDespesa extends AsyncTask<String, Void, Despesa> {
@@ -156,12 +173,11 @@ public class DespesaActivity extends Activity {
 
     }
 
-    class StableArrayAdapter extends ArrayAdapter<String> {
+    class StableArrayAdapter extends ArrayAdapter<Despesa> {
 
-        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+        HashMap<Despesa, Integer> mIdMap = new HashMap<Despesa, Integer>();
 
-        public StableArrayAdapter(Context context, int textViewResourceId,
-                                  List<String> objects) {
+        public StableArrayAdapter(Context context, int textViewResourceId, List<Despesa> objects) {
             super(context, textViewResourceId, objects);
             for (int i = 0; i < objects.size(); ++i) {
                 mIdMap.put(objects.get(i), i);
@@ -170,7 +186,7 @@ public class DespesaActivity extends Activity {
 
         @Override
         public long getItemId(int position) {
-            String item = getItem(position);
+            Despesa item = getItem(position);
             return mIdMap.get(item);
         }
 

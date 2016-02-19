@@ -171,10 +171,76 @@ public class CadastrosGeraisService {
         }
     }
 
+    public List<Despesa> listarDespesas(String urlService) {
+        disableConnectionReuseIfNecessary();
+        String encoding = Base64.encodeToString(("admin" + ":" + "").getBytes(), Base64.NO_WRAP);//TODO colocar senha correta
+
+        HttpURLConnection urlConnection = null;
+        try {
+            // create connection
+            URL urlToRequest = new URL(urlService);
+            urlConnection = (HttpURLConnection) urlToRequest.openConnection();
+            urlConnection.setRequestProperty("Authorization", "Basic " + encoding);
+            urlConnection.setConnectTimeout(15000);
+            urlConnection.setReadTimeout(15000);
+
+            // handle issues
+            int statusCode = urlConnection.getResponseCode();
+            if (statusCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                // handle unauthorized (if service requires user login)
+            } else if (statusCode != HttpURLConnection.HTTP_OK) {
+                // handle any other errors, like 404, 500,..
+            }
+
+            // create JSON object from content
+            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            return convertResponseDespesa(in);
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            // URL is invalid
+        } catch (SocketTimeoutException e) {
+            e.printStackTrace();
+            // data retrieval or connection timed out
+        } catch (IOException e) {
+            e.printStackTrace();
+            // could not read response body
+            // (could not create input stream)
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
+        return null;
+    }
+
+    private List<Despesa> convertResponseDespesa(BufferedReader inStream) {
+        try {
+            String feed_str = null;
+            String entireFeed = "";
+            while ((feed_str = inStream.readLine()) != null) {
+                entireFeed += feed_str;
+            }
+
+            List<Despesa> lista = new ArrayList<Despesa>();
+            ObjectMapper mapper = new ObjectMapper();
+
+            JSONArray array = new JSONArray(entireFeed);
+            for (int i = 0; i < array.length(); i++) {
+                lista.add(mapper.readValue(array.getString(i), Despesa.class));
+            }
+            return lista;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public Despesa salvarDespesa(Despesa despesa, String urlService) {
         ObjectMapper mapper = new ObjectMapper();
 
-        String encoding = Base64.encodeToString(("admin" + ":" + "rest").getBytes(), Base64.NO_WRAP);//TODO colocar senha correta
+        String encoding = Base64.encodeToString(("admin" + ":" + "").getBytes(), Base64.NO_WRAP);//TODO colocar senha correta
 
         try {
             String jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(despesa);
@@ -199,32 +265,4 @@ public class CadastrosGeraisService {
         //TODO colocar no service certo
     }
 
-    private static String getStringFromInputStream(InputStream is) {
-
-        BufferedReader br = null;
-        StringBuilder sb = new StringBuilder();
-
-        String line;
-        try {
-
-            br = new BufferedReader(new InputStreamReader(is));
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return sb.toString();
-
-    }
 }
