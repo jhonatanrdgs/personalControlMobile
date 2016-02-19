@@ -167,22 +167,11 @@ public class DespesaActivity extends Activity {
 
     class StableArrayAdapter extends ArrayAdapter<Despesa> {
 
-        HashMap<Despesa, Integer> mIdMap = new HashMap<Despesa, Integer>();
-
         List<Despesa> despesas;
 
         public StableArrayAdapter(Context context, int textViewResourceId, List<Despesa> objects) {
             super(context, textViewResourceId, objects);
-            for (int i = 0; i < objects.size(); ++i) {
-                mIdMap.put(objects.get(i), i);
-            }
             despesas = objects;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            Despesa item = getItem(position);
-            return mIdMap.get(item);
         }
 
         @Override
@@ -202,10 +191,10 @@ public class DespesaActivity extends Activity {
             {
                 holder = (ViewHolder)convertView.getTag();
             }
-            Despesa in = despesas.get(position);
-            holder.tv.setText(in.getDescricao());
+            Despesa despesa = despesas.get(position);
+            holder.tv.setText(despesa.getDescricaoFormatada());
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", new Locale("pt-BR"));
-            holder.tv2.setText(df.format(in.getData()));
+            holder.tv2.setText(df.format(despesa.getData()));
             // set the name to the text;
 
             return convertView;
