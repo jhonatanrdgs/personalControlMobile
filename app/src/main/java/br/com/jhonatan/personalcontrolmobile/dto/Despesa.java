@@ -116,12 +116,4 @@ public class Despesa {
         this.fim = fim;
     }
 
-    public String getDescricaoFormatada() {
-        String descricaoFormatada = this.descricao + " R$: " + valorTotal;
-        if (this.totalParcelas > 1) {
-            descricaoFormatada +=  "(" + this.totalParcelas +")";//TODO numero da parcela do mes
-        }
-        return descricaoFormatada;
-
-    }
 }
