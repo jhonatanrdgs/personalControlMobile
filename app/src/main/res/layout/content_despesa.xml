@@ -1,97 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="br.com.jhonatan.personalcontrolmobile.Principal"
-    android:orientation="vertical"
-    tools:showIn="@layout/activity_main">
+    android:layout_height="fill_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="br.com.jhonatan.personalcontrolmobile.Principal"
+        android:orientation="vertical"
+        tools:showIn="@layout/activity_main">
 
-    <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Descrição:" android:id="@+id/descricaoLabel"
-         android:layout_marginTop="51dp" />
-
-
-    <EditText android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/descricao"/>
-
-
-    <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Categoria:" android:id="@+id/categoriaLabel" />
-
-    <Spinner
-        android:id="@+id/categoria"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dropdown"/>
-
-    <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Método Pagamento:" android:id="@+id/metodoPgLabel" />
-
-    <Spinner
-        android:id="@+id/metodoPg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dropdown"/>
-
-    <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Fixa?" android:id="@+id/fixaLabel"/>
-
-    <CheckBox android:id="@+id/fixa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Valor:" android:id="@+id/valorLabel" />
-
-    <EditText android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/valor"/>
-
-    <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Data:" android:id="@+id/dataLabel" />
-
-    <EditText android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/data"  />
-
-    <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Parcelas:" android:id="@+id/parcelasLabel" />
-
-    <EditText android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/parcelas" />
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Descrição:" android:id="@+id/descricaoLabel"
+            android:layout_marginTop="51dp" />
 
 
-    <Button android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Salvar"
-        android:id="@+id/btnSalvar"  android:background="@drawable/btncolor"
-        android:layout_marginTop="72dp"
-        android:onClick="salvar"/>
+        <EditText android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/descricao"/>
 
 
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Categoria:" android:id="@+id/categoriaLabel" />
+
+        <Spinner
+            android:id="@+id/categoria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"/>
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Método Pagamento:" android:id="@+id/metodoPgLabel" />
+
+        <Spinner
+            android:id="@+id/metodoPg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"/>
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Fixa?" android:id="@+id/fixaLabel"/>
+
+        <CheckBox android:id="@+id/fixa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Valor:" android:id="@+id/valorLabel" />
+
+        <EditText android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/valor"/>
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Data:" android:id="@+id/dataLabel" />
+
+        <EditText android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/data"  />
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Parcelas:" android:id="@+id/parcelasLabel" />
+
+        <EditText android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/parcelas" />
 
 
-</LinearLayout>
+        <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Salvar"
+            android:id="@+id/btnSalvar"  android:background="@drawable/btncolor"
+            android:layout_marginTop="72dp"
+            android:onClick="salvar"/>
+
+    </LinearLayout>
+</ScrollView>

@@ -61,7 +61,7 @@ public class DespesaActivity extends Activity {
             EditText descricao = (EditText) findViewById(R.id.descricao);
             Spinner categoria = (Spinner) findViewById(R.id.categoria);
             Spinner metodoPg = (Spinner) findViewById(R.id.metodoPg);
-            EditText valor = (EditText) findViewById(R.id.valor);
+            EditText valor = (EditText) findViewById(R.id.valor);//TODO scroll nessa tela, pois no celular ficou ruim
             EditText data = (EditText) findViewById(R.id.data);
             CheckBox fixa = (CheckBox) findViewById(R.id.fixa);
             EditText parcelas = (EditText) findViewById(R.id.parcelas);
