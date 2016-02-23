@@ -41,6 +41,7 @@
         android:layout_height="wrap_content"
         android:onClick="login"
         android:text="Login"
+        android:background="@drawable/btncolor"
         android:layout_marginTop="72dp" />
 
 </LinearLayout>

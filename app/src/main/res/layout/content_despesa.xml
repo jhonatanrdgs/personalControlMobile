@@ -87,7 +87,7 @@
     <Button android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Salvar"
-        android:id="@+id/btnSalvar"
+        android:id="@+id/btnSalvar"  android:background="@drawable/btncolor"
         android:layout_marginTop="72dp"
         android:onClick="salvar"/>
 
