@@ -45,6 +45,7 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.0'
     compile 'com.fasterxml.jackson.core:jackson-core:2.7.0'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.0'
+    compile 'br.com.jansenfelipe:androidmask:1.0.1'
 
 
 }

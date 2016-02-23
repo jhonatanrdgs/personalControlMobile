@@ -21,6 +21,7 @@ import java.util.List;
 import br.com.jhonatan.personalcontrolmobile.assincrono.Resultado;
 import br.com.jhonatan.personalcontrolmobile.assincrono.ResultadoListView;
 import br.com.jhonatan.personalcontrolmobile.dto.Despesa;
+import br.com.jhonatan.personalcontrolmobile.util.SessaoUtil;
 
 /**
  * Created by Jhonatan on 21/02/2016.
@@ -32,7 +33,9 @@ public class DespesaService implements Service<Despesa> {
     @Override
     public Resultado<Despesa> listar() {
         disableConnectionReuseIfNecessary();
-        String encoding = Base64.encodeToString(("admin" + ":" + "rest_api_secure").getBytes(), Base64.NO_WRAP);//TODO colocar senha correta
+
+        String encoding = Base64.encodeToString((SessaoUtil.getInstance().getDadosUsuario().getNomeUsuario() + ":"
+                + SessaoUtil.getInstance().getDadosUsuario().getSenhaDescriptografada()).getBytes(), Base64.NO_WRAP);
 
         HttpURLConnection urlConnection = null;
         try {
@@ -131,7 +134,6 @@ public class DespesaService implements Service<Despesa> {
             e.printStackTrace();
         }
         return despesa;
-        //TODO colocar no service certo
     }
 
 }

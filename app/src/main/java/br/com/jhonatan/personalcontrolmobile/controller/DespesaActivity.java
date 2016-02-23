@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.jhonatan.personalcontrolmobile.R;
 import br.com.jhonatan.personalcontrolmobile.assincrono.AtividadeAssincrona;
 import br.com.jhonatan.personalcontrolmobile.dto.Categoria;
@@ -38,6 +39,9 @@ public class DespesaActivity extends Activity {
         setContentView(R.layout.content_despesa);
         new AtividadeAssincrona(findViewById(R.id.categoria), this).execute(new CategoriaService());//TODO melhorar
         new AtividadeAssincrona(findViewById(R.id.metodoPg), this).execute(new MetodoPagamentoService());
+        EditText data = (EditText) findViewById(R.id.data);
+        MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("##/##/####", data);
+        data.addTextChangedListener(maskCPF);
     }
 
 

@@ -1,7 +1,6 @@
 package br.com.jhonatan.personalcontrolmobile.assincrono;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.view.View;
 
