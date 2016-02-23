@@ -7,9 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import br.com.jhonatan.personalcontrolmobile.R;
+import br.com.jhonatan.personalcontrolmobile.assincrono.AtividadeAssincrona;
+import br.com.jhonatan.personalcontrolmobile.service.ResumoService;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -19,11 +22,12 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_home);
 
-        TextView textView = (TextView) findViewById(R.id.descricaoLabel2);//TODO http://techlovejump.com/android-multicolumn-listview/
-        textView.setText("2333");
+        TextView textView = (TextView) findViewById(R.id.rendimentosGastosText);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        new AtividadeAssincrona(textView, this).execute(new ResumoService());
+
+        Button btnDespesa = (Button) findViewById(R.id.btnDespesa);
+        btnDespesa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent despesaActivity = new Intent(getApplicationContext(), DespesaActivity.class);

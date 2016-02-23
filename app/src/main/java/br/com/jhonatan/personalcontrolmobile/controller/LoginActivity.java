@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.ExecutionException;
 
 import br.com.jhonatan.personalcontrolmobile.R;
 import br.com.jhonatan.personalcontrolmobile.dto.Credenciais;
@@ -30,13 +33,22 @@ public class LoginActivity extends Activity {
 
     public void login(View v) {
         try {
+            //TODO nenhum dado informado
             EditText login = (EditText) findViewById(R.id.login);
             EditText senha = (EditText) findViewById(R.id.senha);
-            new Logar(login.getText().toString(), senha.getText().toString()).execute("");
+            Usuario usuario = new Logar(login.getText().toString(), senha.getText().toString()).execute("").get();
 
-            Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(homeActivity);
+            if (usuario != null) {
+                usuario.setSenhaDescriptografada(senha.getText().toString());
+                SessaoUtil.getInstance().setDadosUsuario(usuario);
+                Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(homeActivity);
+            } else {
+                Toast.makeText(this, "Erro ao realizar o login! Verifique os dados e tente novamente", Toast.LENGTH_LONG).show();
+            }
         } catch (NoSuchAlgorithmException e) {
+            //TODO
+        } catch (InterruptedException | ExecutionException e) {
             //TODO
         }
     }
@@ -57,13 +69,5 @@ class Logar extends AsyncTask<String, Void, Usuario> {//TODO fazer mesmo esquema
     protected Usuario doInBackground(String... serviceUrl) {
         return new LoginService().logar(new Credenciais(login, senhaCriptografada));
     }
-
-    protected void onPostExecute(Usuario usuario) {
-        //TODO se não logou
-        //TODO está redirecionando antes de fazer o login, o redirecionamento deve ser feito depois
-        usuario.setSenhaDescriptografada(senha);
-        SessaoUtil.getInstance().setDadosUsuario(usuario);
-    }
-
 
 }

@@ -10,10 +10,12 @@ import android.widget.Spinner;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import br.com.jansenfelipe.androidmask.MaskEditTextChangedListener;
 import br.com.jhonatan.personalcontrolmobile.R;
+import br.com.jhonatan.personalcontrolmobile.adapter.MoneyTextWatcher;
 import br.com.jhonatan.personalcontrolmobile.assincrono.AtividadeAssincrona;
 import br.com.jhonatan.personalcontrolmobile.dto.Categoria;
 import br.com.jhonatan.personalcontrolmobile.dto.Despesa;
@@ -39,9 +41,18 @@ public class DespesaActivity extends Activity {
         setContentView(R.layout.content_despesa);
         new AtividadeAssincrona(findViewById(R.id.categoria), this).execute(new CategoriaService());//TODO melhorar
         new AtividadeAssincrona(findViewById(R.id.metodoPg), this).execute(new MetodoPagamentoService());
+
         EditText data = (EditText) findViewById(R.id.data);
-        MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("##/##/####", data);
-        data.addTextChangedListener(maskCPF);
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", new Locale("pt", "BR"));
+        data.setText(df.format(new Date()));
+        MaskEditTextChangedListener maskDate = new MaskEditTextChangedListener("##/##/####", data);
+        data.addTextChangedListener(maskDate);
+
+        EditText valor = (EditText) findViewById(R.id.valor);
+        valor.addTextChangedListener(new MoneyTextWatcher(valor));
+
+        EditText parcelas = (EditText) findViewById(R.id.parcelas);
+        parcelas.setText("1");
     }
 
 
@@ -55,9 +66,11 @@ public class DespesaActivity extends Activity {
             CheckBox fixa = (CheckBox) findViewById(R.id.fixa);
             EditText parcelas = (EditText) findViewById(R.id.parcelas);
 
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", new Locale("pt-BR"));
-
-            Despesa despesa = new Despesa(descricao.getText().toString(), Double.valueOf(valor.getText().toString()), (Categoria) categoria.getSelectedItem(),
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", new Locale("pt", "BR"));
+            String valorString = valor.getText().toString().replace("R$", "");
+            valorString = valorString.replace(".", "");
+            valorString = valorString.replace(",",".");
+            Despesa despesa = new Despesa(descricao.getText().toString(), Double.valueOf(valorString), (Categoria) categoria.getSelectedItem(),
                     (MetodoPagamento) metodoPg.getSelectedItem(), df.parse(data.getText().toString()), fixa.isChecked(), Integer.valueOf(parcelas.getText().toString()));
 
             new SalvarDespesa(despesa).execute("http://192.168.100.5:8080/personalcontrol/despesaApi/salvarDespesa");
