@@ -5,7 +5,7 @@ import android.widget.Spinner;
 /**
  * Created by jhonatan.rodrigues on 13/01/2016.
  */
-public class MetodoPagamento implements CadastrosGeraisDTO {
+public class MetodoPagamento {
 
     private Long id;
     private String descricao;
@@ -20,10 +20,6 @@ public class MetodoPagamento implements CadastrosGeraisDTO {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public void preencherCombo(Spinner spinner) {
-        //TODO
     }
 
     @Override

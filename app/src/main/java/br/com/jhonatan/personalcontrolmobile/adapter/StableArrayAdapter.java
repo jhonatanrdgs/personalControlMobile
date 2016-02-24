@@ -11,17 +11,19 @@ import java.util.List;
 import java.util.Locale;
 
 import br.com.jhonatan.personalcontrolmobile.R;
-import br.com.jhonatan.personalcontrolmobile.dto.Despesa;
+import br.com.jhonatan.personalcontrolmobile.assincrono.LinhaListView;
 
-public class StableArrayAdapter extends ArrayAdapter<Despesa> {
+public class StableArrayAdapter extends ArrayAdapter<LinhaListView> {
 
-    List<Despesa> despesas;
+    List<LinhaListView> listagem;
     private Activity activity;
+    private int listView;
 
-    public StableArrayAdapter(Activity activity, int textViewResourceId, List<Despesa> objects) {
+    public StableArrayAdapter(Activity activity, int textViewResourceId, int listView,  List<LinhaListView> objects) {
         super(activity, textViewResourceId, objects);
         this.activity = activity;
-        despesas = objects;
+        this.listagem = objects;
+        this.listView = listView;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class StableArrayAdapter extends ArrayAdapter<Despesa> {
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = activity.getLayoutInflater().inflate(R.layout.listview_despesa,parent,false);
+            convertView = activity.getLayoutInflater().inflate(listView, parent, false);
             // inflate custom layout called row
             holder = new ViewHolder();
             holder.tv =(TextView) convertView.findViewById(R.id.firstLine);
@@ -41,10 +43,9 @@ public class StableArrayAdapter extends ArrayAdapter<Despesa> {
         {
             holder = (ViewHolder)convertView.getTag();
         }
-        Despesa despesa = despesas.get(position);//TODO deixar genérico
-        holder.tv.setText(despesa.getDescricao());
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", new Locale("pt-BR"));
-        holder.tv2.setText("R$ " + despesa.getValorTotal() + " - " + df.format(despesa.getData()));
+        LinhaListView linha = listagem.get(position);
+        holder.tv.setText(linha.getPrimeiraLinha());
+        holder.tv2.setText(linha.getSegundaLinha());
 
         return convertView;
     }

@@ -47,9 +47,9 @@ public class LoginActivity extends Activity {
                 Toast.makeText(this, "Erro ao realizar o login! Verifique os dados e tente novamente", Toast.LENGTH_LONG).show();
             }
         } catch (NoSuchAlgorithmException e) {
-            //TODO
+            Toast.makeText(this, "Ocorreu um erro ao criptografar a senha, tente novamente", Toast.LENGTH_LONG).show();
         } catch (InterruptedException | ExecutionException e) {
-            //TODO
+            Toast.makeText(this, "Erro ao se conectar ao serviço de login.", Toast.LENGTH_LONG).show();
         }
     }
 }

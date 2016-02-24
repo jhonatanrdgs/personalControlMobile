@@ -73,7 +73,7 @@ public class DespesaActivity extends Activity {
             Despesa despesa = new Despesa(descricao.getText().toString(), Double.valueOf(valorString), (Categoria) categoria.getSelectedItem(),
                     (MetodoPagamento) metodoPg.getSelectedItem(), df.parse(data.getText().toString()), fixa.isChecked(), Integer.valueOf(parcelas.getText().toString()));
 
-            new SalvarDespesa(despesa).execute("http://192.168.100.5:8080/personalcontrol/despesaApi/salvarDespesa");
+            new SalvarDespesa(despesa).execute("http://192.168.100.5:8080/personalcontrol/despesaApi/salvarDespesa");//TODO validar campos obrigatorios
         } catch (ParseException e) {
             e.printStackTrace();
         }

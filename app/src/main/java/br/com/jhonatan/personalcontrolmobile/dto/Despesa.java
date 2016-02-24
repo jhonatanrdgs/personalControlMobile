@@ -1,18 +1,19 @@
 package br.com.jhonatan.personalcontrolmobile.dto;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+
+import br.com.jhonatan.personalcontrolmobile.assincrono.LinhaListView;
 
 /**
  * Created by Jhonatan on 14/01/2016.
  */
-public class Despesa {
+public class Despesa implements LinhaListView {
 
     private Long id;
     private Categoria categoria;
     private MetodoPagamento metodoPagamento;
-    //TODO private Usuario usuario;
     private Double valorTotal;
     private String descricao;
     private Integer totalParcelas;
@@ -116,4 +117,14 @@ public class Despesa {
         this.fim = fim;
     }
 
+    @Override
+    public String getPrimeiraLinha() {
+        return this.descricao;
+    }
+
+    @Override
+    public String getSegundaLinha() {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", new Locale("pt-BR"));
+        return "R$ " + getValorTotal() + " - " + df.format(getData());
+    }
 }

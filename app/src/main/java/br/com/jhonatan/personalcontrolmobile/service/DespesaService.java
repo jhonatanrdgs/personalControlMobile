@@ -18,6 +18,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.jhonatan.personalcontrolmobile.R;
+import br.com.jhonatan.personalcontrolmobile.assincrono.LinhaListView;
 import br.com.jhonatan.personalcontrolmobile.assincrono.Resultado;
 import br.com.jhonatan.personalcontrolmobile.assincrono.ResultadoListView;
 import br.com.jhonatan.personalcontrolmobile.dto.Despesa;
@@ -78,8 +80,7 @@ public class DespesaService implements Service<Despesa> {
 
     private void disableConnectionReuseIfNecessary() {
         // see HttpURLConnection API doc
-        if (Integer.parseInt(Build.VERSION.SDK)
-                < Build.VERSION_CODES.FROYO) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
             System.setProperty("http.keepAlive", "false");
         }
     }
@@ -92,7 +93,7 @@ public class DespesaService implements Service<Despesa> {
                 entireFeed += feed_str;
             }
 
-            List<Despesa> lista = new ArrayList<Despesa>();
+            List<LinhaListView> lista = new ArrayList<LinhaListView>();
             ObjectMapper mapper = new ObjectMapper();
 
             JSONArray array = new JSONArray(entireFeed);
@@ -100,7 +101,7 @@ public class DespesaService implements Service<Despesa> {
                 lista.add(mapper.readValue(array.getString(i), Despesa.class));
             }
 
-            Resultado<Despesa> resultado = new ResultadoListView<Despesa>(lista);
+            Resultado<Despesa> resultado = new ResultadoListView(android.R.layout.simple_list_item_1, R.layout.listview_despesa, lista);
             return resultado;
 
         } catch (Exception e) {
@@ -112,7 +113,8 @@ public class DespesaService implements Service<Despesa> {
     public Despesa salvarDespesa(Despesa despesa, String urlService) {
         ObjectMapper mapper = new ObjectMapper();
 
-        String encoding = Base64.encodeToString(("admin" + ":" + "rest_api_secure").getBytes(), Base64.NO_WRAP);//TODO colocar senha correta
+        String encoding = Base64.encodeToString((SessaoUtil.getInstance().getDadosUsuario().getNomeUsuario() + ":"
+                + SessaoUtil.getInstance().getDadosUsuario().getSenhaDescriptografada()).getBytes(), Base64.NO_WRAP);
 
         try {
             String jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(despesa);
