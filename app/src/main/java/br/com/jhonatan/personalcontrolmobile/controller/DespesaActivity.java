@@ -3,6 +3,7 @@ package br.com.jhonatan.personalcontrolmobile.controller;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -61,7 +62,7 @@ public class DespesaActivity extends Activity {
             EditText descricao = (EditText) findViewById(R.id.descricao);
             Spinner categoria = (Spinner) findViewById(R.id.categoria);
             Spinner metodoPg = (Spinner) findViewById(R.id.metodoPg);
-            EditText valor = (EditText) findViewById(R.id.valor);//TODO scroll nessa tela, pois no celular ficou ruim
+            EditText valor = (EditText) findViewById(R.id.valor);
             EditText data = (EditText) findViewById(R.id.data);
             CheckBox fixa = (CheckBox) findViewById(R.id.fixa);
             EditText parcelas = (EditText) findViewById(R.id.parcelas);
@@ -78,6 +79,13 @@ public class DespesaActivity extends Activity {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     class SalvarDespesa extends AsyncTask<String, Void, Despesa> {//TODO fazer mesmo esquema do AtividadeAssincrona

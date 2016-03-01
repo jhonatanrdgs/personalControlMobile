@@ -13,13 +13,13 @@ import java.util.Locale;
 import br.com.jhonatan.personalcontrolmobile.R;
 import br.com.jhonatan.personalcontrolmobile.assincrono.LinhaListView;
 
-public class StableArrayAdapter extends ArrayAdapter<LinhaListView> {
+public class StableArrayAdapter extends ArrayAdapter {
 
-    List<LinhaListView> listagem;
+    List<? extends LinhaListView> listagem;
     private Activity activity;
     private int listView;
 
-    public StableArrayAdapter(Activity activity, int textViewResourceId, int listView,  List<LinhaListView> objects) {
+    public StableArrayAdapter(Activity activity, int textViewResourceId, int listView,  List<? extends LinhaListView> objects) {
         super(activity, textViewResourceId, objects);
         this.activity = activity;
         this.listagem = objects;

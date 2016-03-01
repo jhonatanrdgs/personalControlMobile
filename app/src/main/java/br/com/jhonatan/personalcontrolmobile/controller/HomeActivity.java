@@ -13,6 +13,7 @@ import android.widget.TextView;
 import br.com.jhonatan.personalcontrolmobile.R;
 import br.com.jhonatan.personalcontrolmobile.assincrono.AtividadeAssincrona;
 import br.com.jhonatan.personalcontrolmobile.service.ResumoService;
+import br.com.jhonatan.personalcontrolmobile.util.SessaoUtil;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -51,8 +52,9 @@ public class HomeActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {//TODO colocar a certa, isso vem do menu
-            Intent goToNextActivity = new Intent(getApplicationContext(), DespesaActivity.class);
+        if (id == R.id.action_sair) {
+            SessaoUtil.getInstance().invalidarSessao();
+            Intent goToNextActivity = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(goToNextActivity);
         }
 

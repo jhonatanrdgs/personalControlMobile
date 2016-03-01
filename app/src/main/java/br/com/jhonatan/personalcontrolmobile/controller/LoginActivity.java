@@ -36,8 +36,13 @@ public class LoginActivity extends Activity {
             //TODO nenhum dado informado
             EditText login = (EditText) findViewById(R.id.login);
             EditText senha = (EditText) findViewById(R.id.senha);
-            Usuario usuario = new Logar(login.getText().toString(), senha.getText().toString()).execute("").get();
 
+            if (login.getText().length() == 0 || senha.getText().length() == 0) {
+                Toast.makeText(this, "Informe o Login e a senha!", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            Usuario usuario = new Logar(login.getText().toString(), senha.getText().toString()).execute("").get();
             if (usuario != null) {
                 usuario.setSenhaDescriptografada(senha.getText().toString());
                 SessaoUtil.getInstance().setDadosUsuario(usuario);

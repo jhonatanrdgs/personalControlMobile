@@ -17,11 +17,11 @@ import br.com.jhonatan.personalcontrolmobile.dto.Despesa;
  */
 public class ResultadoListView implements Resultado {
 
-    private List<LinhaListView> itens;
+    private List<? extends LinhaListView> itens;
     private int lista;
     private int listView;
 
-    public ResultadoListView(int lista, int listView, List<LinhaListView> itens) {
+    public ResultadoListView(int lista, int listView, List<? extends LinhaListView> itens) {
         this.itens = itens;
         this.lista = lista;
         this.listView = listView;

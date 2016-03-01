@@ -7,7 +7,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <LinearLayout
+        android:layout_marginTop="40dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         tools:showIn="@layout/activity_main"
@@ -15,22 +16,26 @@
         xmlns:tools="http://schemas.android.com/tools">
         <TextView
             android:id="@+id/rendimentos"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".75"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:text="Rendimentos no Período:"
+            android:background="@drawable/border"
             android:textSize="18sp"
             android:textStyle="bold"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".25"
             android:layout_height="wrap_content"
             android:id="@+id/rendimentosText"
             android:textSize="18sp"
+            android:background="@drawable/border"
             android:layout_alignParentEnd="true"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         tools:showIn="@layout/activity_main"
@@ -38,22 +43,26 @@
         xmlns:tools="http://schemas.android.com/tools">
         <TextView
             android:id="@+id/gastosFixos"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".75"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:textSize="18sp"
+            android:background="@drawable/border"
             android:textStyle="bold"
             android:text="Total de Gastos Fixos:" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".25"
             android:layout_height="wrap_content"
             android:id="@+id/gastosFixosText"
             android:textSize="18sp"
+            android:background="@drawable/border"
             android:layout_alignParentEnd="true"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         tools:showIn="@layout/activity_main"
@@ -62,22 +71,26 @@
 
         <TextView
             android:id="@+id/gastosVariaveis"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".75"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:textSize="18sp"
+            android:background="@drawable/border"
             android:textStyle="bold"
-            android:text="Total de Gastos Variáveis no Período:" />
+            android:text="Total Gastos Variáveis Período:" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".25"
             android:layout_height="wrap_content"
             android:id="@+id/gastosVariaveisText"
             android:textSize="18sp"
+            android:background="@drawable/border"
             android:layout_alignParentEnd="true"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         tools:showIn="@layout/activity_main"
@@ -85,22 +98,26 @@
         xmlns:tools="http://schemas.android.com/tools">
         <TextView
             android:id="@+id/gastos"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".75"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:textSize="18sp"
+            android:background="@drawable/border"
             android:textStyle="bold"
             android:text="Total de Gastos no Período:" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".25"
             android:layout_height="wrap_content"
             android:id="@+id/gastosText"
             android:textSize="18sp"
+            android:background="@drawable/border"
             android:layout_alignParentEnd="true"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         tools:showIn="@layout/activity_main"
@@ -108,7 +125,8 @@
         xmlns:tools="http://schemas.android.com/tools">
         <TextView
             android:id="@+id/rendimentosGastos"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".75"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:textSize="18sp" android:background="@drawable/border"
@@ -116,14 +134,15 @@
             android:text="Rendimentos - Gastos:" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".25"
             android:layout_height="wrap_content"
             android:textSize="18sp" android:background="@drawable/border"
             android:id="@+id/rendimentosGastosText"
             android:layout_alignParentEnd="true"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         tools:showIn="@layout/activity_main"
@@ -131,23 +150,28 @@
         xmlns:tools="http://schemas.android.com/tools">
         <TextView
             android:id="@+id/percentualComprometido"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".75"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:textSize="18sp"
+            android:background="@drawable/border"
             android:textStyle="bold"
             android:text="Percentual Comprometido:" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".25"
             android:layout_height="wrap_content"
             android:id="@+id/percentualComprometidoText"
             android:textSize="18sp"
+            android:background="@drawable/border"
             android:layout_alignParentEnd="true"/>
-    </RelativeLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnDespesa"
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Despesas"

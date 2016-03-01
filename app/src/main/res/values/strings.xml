@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Personal Control</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_sair">Sair</string>
 </resources>

@@ -23,6 +23,7 @@ public class AtividadeAssincrona extends AsyncTask<Service, Void, Resultado> {
     protected Resultado doInBackground(Service... services) {
         return services[0].listar();
     }
+    //TODO usar reflection para pegar o método do service, para não usar só o listar
 
     protected void onPostExecute(Resultado resultado) {
         resultado.executar(componente, activity);

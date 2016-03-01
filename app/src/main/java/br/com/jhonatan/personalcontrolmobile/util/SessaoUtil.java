@@ -26,4 +26,9 @@ public final class SessaoUtil {
     public Usuario getDadosUsuario() {
         return dadosUsuario;
     }
+
+    public void invalidarSessao() {
+        this.dadosUsuario = null;
+    }
+
 }
